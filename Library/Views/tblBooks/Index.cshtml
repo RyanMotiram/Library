@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Library.Models.tblBook>
+
+@{
+    ViewBag.Title = "Book List";
+}
+
+    <h2>Book List</h2>
+
+<p>
+    @Html.ActionLink("Back to home page", "Index", "tblReserves")
+</p>
+
+@using (@Html.BeginForm("Index", "tblBooks", FormMethod.Get))
+{
+    //Searchbar to sort books by either name or category
+    <b>Search by:</b>
+    @Html.RadioButton("SearchBy", "Name", true)<text>Book Name</text>
+    @Html.RadioButton("SearchBy", "Category")<text>Category</text>
+    <br />
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Book_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISBN)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.ActionLink("Reserve Book", "Create", "tblReserves", new { id = item.Id }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Back to Admin Page", "AdminPage")
+

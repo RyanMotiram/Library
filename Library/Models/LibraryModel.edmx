@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LibraryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBooks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Book Name" Type="varchar" MaxLength="50" />
+          <Property Name="Category" Type="varchar" MaxLength="50" />
+          <Property Name="ISBN" Type="varchar" MaxLength="13" />
+          <Property Name="Availability" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblReserve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User Id" Type="int" />
+          <Property Name="User Name" Type="varchar" MaxLength="50" />
+          <Property Name="Book Id" Type="int" />
+          <Property Name="Book Name" Type="varchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Due Date" Type="date" />
+          <Property Name="Overdue Fee" Type="money" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User Name" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Phone Number" Type="varchar" MaxLength="50" />
+          <Property Name="Admin" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__tblReserv__Book __29572725">
+          <End Role="tblBooks" Type="Self.tblBooks" Multiplicity="0..1" />
+          <End Role="tblReserve" Type="Self.tblReserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblReserve">
+              <PropertyRef Name="Book Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblReserv__User __286302EC">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblReserve" Type="Self.tblReserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblReserve">
+              <PropertyRef Name="User Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryDBModelStoreContainer">
+          <EntitySet Name="tblBooks" EntityType="Self.tblBooks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblReserve" EntityType="Self.tblReserve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblReserv__Book __29572725" Association="Self.FK__tblReserv__Book __29572725">
+            <End Role="tblBooks" EntitySet="tblBooks" />
+            <End Role="tblReserve" EntitySet="tblReserve" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblReserv__User __286302EC" Association="Self.FK__tblReserv__User __286302EC">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblReserve" EntitySet="tblReserve" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibraryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblBook">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Book_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ISBN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Availability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblReserves" Relationship="Self.FK__tblReserv__Book___29572725" FromRole="tblBooks" ToRole="tblReserve" />
+        </EntityType>
+        <EntityType Name="tblReserve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Book_Id" Type="Int32" />
+          <Property Name="Book_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Due_Date" Type="DateTime" Precision="0" />
+          <Property Name="Overdue_Fee" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblBook" Relationship="Self.FK__tblReserv__Book___29572725" FromRole="tblReserve" ToRole="tblBooks" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblReserv__User___286302EC" FromRole="tblReserve" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Admin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblReserves" Relationship="Self.FK__tblReserv__User___286302EC" FromRole="tblUser" ToRole="tblReserve" />
+        </EntityType>
+        <Association Name="FK__tblReserv__Book___29572725">
+          <End Role="tblBooks" Type="Self.tblBook" Multiplicity="0..1" />
+          <End Role="tblReserve" Type="Self.tblReserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblReserve">
+              <PropertyRef Name="Book_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblReserv__User___286302EC">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+          <End Role="tblReserve" Type="Self.tblReserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblReserve">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBooks" EntityType="Self.tblBook" />
+          <EntitySet Name="tblReserves" EntityType="Self.tblReserve" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <AssociationSet Name="FK__tblReserv__Book___29572725" Association="Self.FK__tblReserv__Book___29572725">
+            <End Role="tblBooks" EntitySet="tblBooks" />
+            <End Role="tblReserve" EntitySet="tblReserves" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblReserv__User___286302EC" Association="Self.FK__tblReserv__User___286302EC">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblReserve" EntitySet="tblReserves" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LibraryDBModelStoreContainer" CdmEntityContainer="LibraryDBContext">
+          <EntitySetMapping Name="tblBooks">
+            <EntityTypeMapping TypeName="LibraryDBModel.tblBook">
+              <MappingFragment StoreEntitySet="tblBooks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Book_Name" ColumnName="Book Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Availability" ColumnName="Availability" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblReserves">
+            <EntityTypeMapping TypeName="LibraryDBModel.tblReserve">
+              <MappingFragment StoreEntitySet="tblReserve">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User Id" />
+                <ScalarProperty Name="User_Name" ColumnName="User Name" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book Id" />
+                <ScalarProperty Name="Book_Name" ColumnName="Book Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Due_Date" ColumnName="Due Date" />
+                <ScalarProperty Name="Overdue_Fee" ColumnName="Overdue Fee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="LibraryDBModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User_Name" ColumnName="User Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone Number" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Room Booking Service</h1>
+<p class="lead">Welcome! Please login and register to book a room!</p>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    @Html.Label("username", "Enter Username:")
+    <br />
+    @Html.TextBox("username")
+    <br />
+    <br />
+
+    @Html.Label("password", "Enter Password:")
+    <br />
+    @Html.Password("password")
+    <br />
+    <br />
+    <input type="submit" value="Log In" />
+}
+
+<br />
+@Html.ActionLink("Don't have an account? Click Here!", "Create", "tblUsers")

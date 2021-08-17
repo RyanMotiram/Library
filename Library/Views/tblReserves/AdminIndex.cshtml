@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Library.Models.tblReserve>
+
+@{
+    ViewBag.Title = "Admin List of Reservations";
+}
+
+    <h2>Admin List of Reservations</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tblUser.User_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblBook.Book_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Due_Date)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblUser.User_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblBook.Book_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Due_Date)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "AdminDelete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Back to Admin Page", "AdminPage", "tblUsers")

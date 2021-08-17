@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibraryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblBook">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Book_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ISBN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Availability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblReserves" Relationship="Self.FK__tblReserv__Book___29572725" FromRole="tblBooks" ToRole="tblReserve" />
+  </EntityType>
+  <EntityType Name="tblReserve">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Id" Type="Int32" />
+    <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Book_Id" Type="Int32" />
+    <Property Name="Book_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Due_Date" Type="DateTime" Precision="0" />
+    <Property Name="Overdue_Fee" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="tblBook" Relationship="Self.FK__tblReserv__Book___29572725" FromRole="tblReserve" ToRole="tblBooks" />
+    <NavigationProperty Name="tblUser" Relationship="Self.FK__tblReserv__User___286302EC" FromRole="tblReserve" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Admin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblReserves" Relationship="Self.FK__tblReserv__User___286302EC" FromRole="tblUser" ToRole="tblReserve" />
+  </EntityType>
+  <Association Name="FK__tblReserv__Book___29572725">
+    <End Role="tblBooks" Type="Self.tblBook" Multiplicity="0..1" />
+    <End Role="tblReserve" Type="Self.tblReserve" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblBooks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblReserve">
+        <PropertyRef Name="Book_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblReserv__User___286302EC">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblReserve" Type="Self.tblReserve" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblReserve">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LibraryDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblBooks" EntityType="Self.tblBook" />
+    <EntitySet Name="tblReserves" EntityType="Self.tblReserve" />
+    <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+    <AssociationSet Name="FK__tblReserv__Book___29572725" Association="Self.FK__tblReserv__Book___29572725">
+      <End Role="tblBooks" EntitySet="tblBooks" />
+      <End Role="tblReserve" EntitySet="tblReserves" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblReserv__User___286302EC" Association="Self.FK__tblReserv__User___286302EC">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblReserve" EntitySet="tblReserves" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

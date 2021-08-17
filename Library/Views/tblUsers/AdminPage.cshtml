@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Library.Models.tblUser>
+
+@{
+    ViewBag.Title = "Admin Home Page";
+}
+
+    <h2>Admin Home Page</h2>
+
+<p>
+    @Html.ActionLink("View All Users", "index") |
+    @Html.ActionLink("View All Reservations", "AdminIndex", "tblReserves") |
+    @Html.ActionLink("View All Books", "AdminIndex", "tblBooks")
+</p>
